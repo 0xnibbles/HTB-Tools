@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+if [ -z "$1" ]; then
+	echo
+	echo "No Arguments. What I am suppose to encode???"
+	echo
+	exit 1
+fi
+	
+
+b64encoded=$(echo -n $1 | base64)
+echo -n $b64encoded | xclip -sel clipboard
+echo $b64encoded

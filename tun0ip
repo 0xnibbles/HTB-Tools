@@ -1,0 +1,9 @@
+#!/bin/bash
+# Requires xclip to run properly
+# For ubuntu: sudo apt-get install xclip
+
+
+tun0=$(ip a show tun0)
+ip=$(echo -n $tun0 | awk '{print $16}' | awk -F/ '{print $1}')
+echo -n $ip | xclip -sel clipboard
+echo $ip

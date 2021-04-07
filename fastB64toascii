@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+b64Decoded=$(echo -n $1 | base64 -d -w0)
+echo -n $b64Decoded | xclip -sel clipboard
+echo $b64Decoded
