@@ -1,2 +1,2 @@
 # HTB-Tools
-Command to make your pentesting a little bit easiear
+Commands to make you're pentesting a little bit easier 
