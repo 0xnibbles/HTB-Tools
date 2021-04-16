@@ -23,7 +23,7 @@ fi
 commandShellList () {
 	if ! [[ "$1" =~ ^(bash|nc|php)$  ]]; then
 		echo
-		echo "Command not supported to create a reverse shell\nPlease use bash, nc, socat or php"
+		echo "Command not supported to create a reverse shell\nPlease use bash, nc or php"
 		echo
 		exit 1
 	fi
