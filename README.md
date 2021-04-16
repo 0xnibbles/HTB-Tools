@@ -16,3 +16,5 @@ _**List of tools**_
 **fastB64toascii** - Pass your base64 string as an argument and decodeit quickly. Copied to clipboard and shown on your screen.
 
 **ascii2b64** - The same as fastB64toascii but convert your ascii string to base64.
+
+**revShell** - Have an easy to use revershell with your tun0 IP with bash,nc or php commands.
